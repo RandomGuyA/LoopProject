@@ -4,26 +4,29 @@ var context = canvas.getContext("2d");
 var FRAME_INTERVAL = 10;
 var game = {
 	images: 0,
-    imagesLoaded: 0,
+    imagesLoaded: 0
 }
 var mouse = {
     x: 0,
     y: 0,
     down: false
 }
-var fps=600/FRAME_INTERVAL;
+var fps=60;
+var lastLoop = new Date;
 
 function update(mod) {
-	//fps=mod;
+	var thisLoop = new Date;
+    fps = 1000 / (thisLoop - lastLoop);
+    lastLoop = thisLoop;
 }
-
-function render() {
+function render() { 
 	
 	context.clearRect(0, 0, canvas.width, canvas.height);
-	//context.fillStyle = "#069";
-	//context.fillRect(mouse.x,mouse.y,100,100);
-	context.fillText("("+mouse.x+" , "+mouse.y+")",10,20);
-	context.fillText("FPS: "+fps,10,40);
+	context.fillStyle = "#069";
+	context.fillRect(mouse.x,mouse.y,100,100);
+	context.fillText("FPS: "+fps,10,20);
+	context.fillText("("+mouse.x+" , "+mouse.y+")",10,40);
+	
 }
 
 
@@ -42,9 +45,6 @@ function init(){
 }
 
 
-
-
-
 /******************************
 *		MOUSE LISTENERS
 *******************************/
@@ -59,9 +59,5 @@ canvas.addEventListener('mousemove', function(e) {
      	var rect = canvas.getBoundingClientRect();
         mouse.y= e.clientY - rect.top;
         mouse.x= e.clientX - rect.left;
-});;
-/*****************
-*	RUN GAME
-******************/
-
-init();
+});
+init();	
